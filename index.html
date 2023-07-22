@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <title>Item Lister</title>
+  <title>Example</title>
 </head>
 <body>
   <header id="main-header" class="bg-success text-white p-4 mb-3">
@@ -14,46 +10,39 @@
     </div>
   </header>
   <div class="container">
-   <div id="main" class="card card-body">
-    <h2 class="title" id="add-item-heading">Add Items</h2>
-    <form class="form-inline mb-3">
-      <input type="text" class="form-control mr-2">
-      <input type="submit" class="btn btn-dark" value="Submit">
-    </form>
-    <h2 class="title">Items</h2>
-    <ul id="items" class="list-group">
-      <li class="list-group-item">Item 1</li>
-      <li class="list-group-item">Item 2</li>
-      <li class="list-group-item" id="third-item">Item 3</li>
-      <li class="list-group-item">Item 4</li>
-    </ul>
-   </div>
+    <div id="main" class="card card-body">
+      <h2 class="title" id="add-item-heading">Add Items</h2>
+      <form class="form-inline mb-3">
+        <input type="text" class="form-control mr-2">
+        <input type="submit" class="btn btn-dark" value="Submit">
+      </form>
+      <h2 class="title">Items</h2>
+      <ul id="items" class="list-group">
+        <li class="list-group-item">Item 1</li>
+        <li class="list-group-item">Item 2</li>
+        <li class="list-group-item" id="third-item">Item 3</li>
+        <li class="list-group-item">Item 4</li>
+      </ul>
+    </div>
   </div>
 
-  <!-- JavaScript code for DOM manipulation -->
   <script>
-    // Get the header title element by its ID
-    const headerTitle = document.getElementById('header-title');
+    // Add a new li element without the same class name
+    const newItem = document.createElement('li');
+    newItem.innerText = 'New Item';
 
-    // Add a black border to the header title
-    headerTitle.style.border = '2px solid black';
+    // Add the new li element to the ul with ID "items"
+    const itemList = document.getElementById('items');
+    itemList.appendChild(newItem);
 
-    // Get the "ADD ITEM" heading element by its ID
-    const addItemHeading = document.getElementById('add-item-heading');
+    // Edit the newly added li element using getElementsByClassName
+    const itemsByClassName = document.getElementsByClassName('list-group-item');
+    itemsByClassName[itemsByClassName.length - 1].style.backgroundColor = 'yellow';
 
-    // Apply styles to make the heading bold and change the font color to green
-    addItemHeading.style.fontWeight = 'bold';
-    addItemHeading.style.color = 'green';
-
-    // Get the third element in the list and set its background color to green
-    const thirdListItem = document.getElementById('third-item');
-    thirdListItem.style.backgroundColor = 'green';
-
-    // Get all the list items and set their font weight to bold
-    const listItems = document.querySelectorAll('#items li');
-    for (let i = 0; i < listItems.length; i++) {
-      listItems[i].style.fontWeight = 'bold';
-    }
+    // Edit the newly added li element using getElementsByTagName
+    const itemsByTagName = document.getElementsByTagName('li');
+    itemsByTagName[itemsByTagName.length - 1].style.fontWeight = 'bold';
+    itemsByTagName[itemsByTagName.length - 1].style.color = 'blue';
   </script>
 </body>
 </html>
