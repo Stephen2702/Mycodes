@@ -24,15 +24,16 @@
     <div id="main" class="card card-body">
       <h2 class="title">Add Items</h2>
       <form id="addForm" class="form-inline mb-3">
-        <input type="text" class="form-control mr-2" id="item">
+        <input type="text" class="form-control mr-2" id="itemName" placeholder="Item Name">
+        <input type="text" class="form-control mr-2" id="itemDescription" placeholder="Item Description">
         <input type="submit" class="btn btn-dark" value="Submit">
       </form>
       <h2 class="title">Items</h2>
       <ul id="items" class="list-group">
-        <li class="list-group-item">Item 1 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
-        <li class="list-group-item">Item 2 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
-        <li class="list-group-item">Item 3 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
-        <li class="list-group-item">Item 4 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
+        <li class="list-group-item" data-name="Item 1" data-description="This is Item 1 description.">Item 1 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
+        <li class="list-group-item" data-name="Item 2" data-description="This is Item 2 description.">Item 2 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
+        <li class="list-group-item" data-name="Item 3" data-description="This is Item 3 description.">Item 3 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
+        <li class="list-group-item" data-name="Item 4" data-description="This is Item 4 description.">Item 4 <button class="btn btn-danger btn-sm float-right delete">X</button> <button class="btn btn-primary btn-sm float-right edit">Edit</button></li>
       </ul>
     </div>
   </div>
@@ -60,34 +61,41 @@
       var text = e.target.value.toLowerCase();
       var items = itemList.getElementsByTagName('li');
       Array.from(items).forEach(function(item) {
-        var itemName = item.firstChild.textContent;
-        if (itemName.toLowerCase().indexOf(text) != -1) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
+        var itemName = item.dataset.name.toLowerCase();
+        var itemDescription = item.dataset.description.toLowerCase();
+        var isMatch = itemName.indexOf(text) !== -1 || itemDescription.indexOf(text) !== -1;
+        item.style.display = isMatch ? 'block' : 'none';
       });
     });
 
     // Add item
     function addItem(e) {
       e.preventDefault();
-      var newItem = document.getElementById('item').value;
+      var newItemName = document.getElementById('itemName').value;
+      var newItemDescription = document.getElementById('itemDescription').value;
+
       var li = document.createElement('li');
       li.className = 'list-group-item';
-      li.appendChild(document.createTextNode(newItem));
-      
+      li.appendChild(document.createTextNode(newItemName));
+
       var deleteBtn = document.createElement('button');
       deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
       deleteBtn.appendChild(document.createTextNode('X'));
       li.appendChild(deleteBtn);
-      
+
       var editBtn = document.createElement('button');
       editBtn.className = 'btn btn-primary btn-sm float-right edit';
       editBtn.appendChild(document.createTextNode('Edit'));
       li.appendChild(editBtn);
-      
+
+      li.setAttribute('data-name', newItemName);
+      li.setAttribute('data-description', newItemDescription);
+
       itemList.appendChild(li);
+
+      // Clear input fields after adding item
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemDescription').value = '';
     }
   </script>
 </body>
