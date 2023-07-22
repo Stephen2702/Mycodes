@@ -42,20 +42,25 @@
 
     form.addEventListener('submit', addItem);
 
-    itemList.addEventListener('click', function(e) {
+    itemList.addEventListener('click', function (e) {
       if (e.target.classList.contains('delete')) {
         if (confirm('Are You Sure?')) {
           var li = e.target.parentElement;
           itemList.removeChild(li);
           removeItemFromLocalStorage(li);
         }
+      } else if (e.target.classList.contains('edit')) {
+        var li = e.target.parentElement;
+        var itemName = li.dataset.name;
+        var itemDescription = li.dataset.description;
+        editItem(li, itemName, itemDescription);
       }
     });
 
-    filter.addEventListener('keyup', function(e) {
+    filter.addEventListener('keyup', function (e) {
       var text = e.target.value.toLowerCase();
       var items = itemList.getElementsByTagName('li');
-      Array.from(items).forEach(function(item) {
+      Array.from(items).forEach(function (item) {
         var itemName = item.dataset.name.toLowerCase();
         var itemDescription = item.dataset.description.toLowerCase();
         var isMatch = itemName.indexOf(text) !== -1 || itemDescription.indexOf(text) !== -1;
@@ -103,8 +108,31 @@
     function removeItemFromLocalStorage(item) {
       var itemName = item.dataset.name;
       var existingItems = JSON.parse(localStorage.getItem('items')) || [];
-      var updatedItems = existingItems.filter(function(userDetails) {
+      var updatedItems = existingItems.filter(function (userDetails) {
         return userDetails.name !== itemName;
+      });
+      localStorage.setItem('items', JSON.stringify(updatedItems));
+    }
+
+    function editItem(li, itemName, itemDescription) {
+      var newName = prompt('Edit Item Name:', itemName);
+      if (newName !== null && newName.trim() !== '') {
+        var newDescription = prompt('Edit Item Description:', itemDescription);
+        li.firstChild.textContent = newName;
+        li.setAttribute('data-name', newName);
+        li.setAttribute('data-description', newDescription);
+        updateItemInLocalStorage(itemName, newName, newDescription);
+      }
+    }
+
+    function updateItemInLocalStorage(oldName, newName, newDescription) {
+      var existingItems = JSON.parse(localStorage.getItem('items')) || [];
+      var updatedItems = existingItems.map(function (userDetails) {
+        if (userDetails.name === oldName) {
+          userDetails.name = newName;
+          userDetails.description = newDescription;
+        }
+        return userDetails;
       });
       localStorage.setItem('items', JSON.stringify(updatedItems));
     }
@@ -112,7 +140,7 @@
     // Populate items from local storage on page load
     function populateItemsFromLocalStorage() {
       var existingItems = JSON.parse(localStorage.getItem('items')) || [];
-      existingItems.forEach(function(userDetails) {
+      existingItems.forEach(function (userDetails) {
         var li = document.createElement('li');
         li.className = 'list-group-item';
         li.appendChild(document.createTextNode(userDetails.name));
