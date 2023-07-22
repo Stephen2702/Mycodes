@@ -24,7 +24,7 @@
     <ul id="items" class="list-group">
       <li class="list-group-item">Item 1</li>
       <li class="list-group-item">Item 2</li>
-      <li class="list-group-item">Item 3</li>
+      <li class="list-group-item" id="third-item">Item 3</li>
       <li class="list-group-item">Item 4</li>
     </ul>
    </div>
@@ -44,6 +44,16 @@
     // Apply styles to make the heading bold and change the font color to green
     addItemHeading.style.fontWeight = 'bold';
     addItemHeading.style.color = 'green';
+
+    // Get the third element in the list and set its background color to green
+    const thirdListItem = document.getElementById('third-item');
+    thirdListItem.style.backgroundColor = 'green';
+
+    // Get all the list items and set their font weight to bold
+    const listItems = document.querySelectorAll('#items li');
+    for (let i = 0; i < listItems.length; i++) {
+      listItems[i].style.fontWeight = 'bold';
+    }
   </script>
 </body>
 </html>
