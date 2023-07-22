@@ -19,30 +19,34 @@
       <h2 class="title">Items</h2>
       <ul id="items" class="list-group">
         <li class="list-group-item">Item 1</li>
-        <li class="list-group-item">Item 2</li>
-        <li class="list-group-item" id="third-item">Item 3</li>
+        <li class="list-group-item" style="background-color: green;">Item 2</li>
+        <li class="list-group-item" style="display: none;">Item 3</li>
         <li class="list-group-item">Item 4</li>
+        <li class="list-group-item">Item 5</li>
+        <li class="list-group-item">Item 6</li>
       </ul>
     </div>
   </div>
 
   <script>
-    // Add a new li element without the same class name
-    const newItem = document.createElement('li');
-    newItem.innerText = 'New Item';
+    // Make the 2nd item have a green background color
+    const secondItem = document.querySelector('#items li:nth-child(2)');
+    secondItem.style.backgroundColor = 'green';
 
-    // Add the new li element to the ul with ID "items"
-    const itemList = document.getElementById('items');
-    itemList.appendChild(newItem);
+    // Make the 3rd item invisible
+    const thirdItem = document.querySelector('#items li:nth-child(3)');
+    thirdItem.style.display = 'none';
 
-    // Edit the newly added li element using getElementsByClassName
-    const itemsByClassName = document.getElementsByClassName('list-group-item');
-    itemsByClassName[itemsByClassName.length - 1].style.backgroundColor = 'yellow';
+    // Change the font color to green for the 2nd item in the item list using querySelectorAll
+    const itemList = document.querySelectorAll('#items li');
+    itemList[1].style.color = 'green';
 
-    // Edit the newly added li element using getElementsByTagName
-    const itemsByTagName = document.getElementsByTagName('li');
-    itemsByTagName[itemsByTagName.length - 1].style.fontWeight = 'bold';
-    itemsByTagName[itemsByTagName.length - 1].style.color = 'blue';
+    // Choose all the odd elements and make their background green using querySelectorAll
+    for (let i = 0; i < itemList.length; i++) {
+      if (i % 2 !== 0) {
+        itemList[i].style.backgroundColor = 'green';
+      }
+    }
   </script>
 </body>
 </html>
